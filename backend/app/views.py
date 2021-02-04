@@ -1,7 +1,13 @@
-# from django.shortcuts import render
 import psycopg2
 from psycopg2 import Error
-# Create your views here.
+
+from django.contrib.auth.models import User, Group
+from .models import Host
+from rest_framework import viewsets
+from rest_framework import permissions
+from backend.app.serializers import UserSerializer, GroupSerializer, HostSerializer
+
+## psycopg2 connection
 try:
     # Connect to an existing database
     connection = psycopg2.connect(user="",
@@ -29,3 +35,19 @@ finally:
         cursor.close()
         connection.close()
         print("PostgreSQL connection is closed")
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class HostViewSet(viewsets.ModelViewSet):
+    queryset = Host.objects.all()
+    serializer_class = HostSerializer
+    permission_classes = [permissions.IsAuthenticated]
