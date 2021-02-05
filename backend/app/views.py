@@ -1,11 +1,12 @@
 import psycopg2
 from psycopg2 import Error
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group, User
+# from django.contrib.auth import get_user_model
 from .models import Host
 from rest_framework import viewsets
 from rest_framework import permissions
-from backend.app.serializers import UserSerializer, GroupSerializer, HostSerializer
+from backend.app.serializers import UserSerializer, GroupSerializer
 
 ## psycopg2 connection
 try:
@@ -36,18 +37,18 @@ finally:
         connection.close()
         print("PostgreSQL connection is closed")
 
+# User = get_user_model()
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
+    # permission_classes = [permissions.IsAuthenticated]
 
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class HostViewSet(viewsets.ModelViewSet):
-    queryset = Host.objects.all()
-    serializer_class = HostSerializer
+# class HostViewSet(viewsets.ModelViewSet):
+#     queryset = Host.objects.all()
+#     serializer_class = HostSerializer
     # permission_classes = [permissions.IsAuthenticated]

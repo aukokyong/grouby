@@ -6,7 +6,7 @@ from backend.app import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
-router.register(r'hosts', views.HostViewSet)
+# router.register(r'hosts', views.HostViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
