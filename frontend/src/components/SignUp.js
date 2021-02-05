@@ -8,6 +8,7 @@ class SignUp extends Component {
             name: "",
             email: "",
             mobile_num: "",
+            password: "",
         }
     }
 
@@ -31,12 +32,14 @@ class SignUp extends Component {
         return (
             <>
                 <form onSubmit={(e) => this.handleSubmit(e)}>
-                    <label for="name">Name: </label>
+                    <label htmlFor="name">Name: </label>
                     <input type="text" name="name" value={this.state.name} onChange={(e) => this.handleChange(e, "name")} />
-                    <label for="email">Email: </label>
+                    <label htmlFor="email">Email: </label>
                     <input type="email" name="email" value={this.state.email} onChange={(e) => this.handleChange(e, "email")} />
-                    <label for="mobile_num">Mobile Number: </label>
+                    <label htmlFor="mobile_num">Mobile Number: </label>
                     <input type="number" name="mobile_num" value={this.state.mobile_num} onChange={(e) => this.handleChange(e, "mobile_num")} />
+                    <label htmlFor="password">Password: </label>
+                    <input type="password" name="password" value={this.state.password} onChange={(e) => this.handleChange(e, "password")} />
                     <br />
                     <input type="submit" value="Submit" />
                 </form>

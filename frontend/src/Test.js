@@ -29,14 +29,14 @@ class SignUp extends Component {
     handleDelete = (e) => { // not working - error in console.
         e.preventDefault()
         const hostId = e.target.id
-        axios.delete(`http://localhost:8000/hosts/${hostId}`, {
-            headers: {
-                'HTTP_X_CSRFToken': token // might be 'X-CSRFToken: token
-            },
-            credentials: 'include'
-        })
+        axios.delete(`http://localhost:8000/hosts/${hostId}`)
     }
 
+    // // , {
+    //     headers: {
+    //         'HTTP_X_CSRFToken': token // might be 'X-CSRFToken: token
+    //     },
+    //     credentials: 'include'
     render() {
         return (
             <>
