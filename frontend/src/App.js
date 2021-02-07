@@ -1,8 +1,9 @@
-import { Route, BrowserRouter as Router, useParams } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
 
 import Landing from './components/Landing'
 import Login from './components/Login'
 import BuyerNav from './components/BuyerNav'
+import BuyerEntry from './components/BuyerEntry'
 
 function App() {
   return (
@@ -18,11 +19,11 @@ function App() {
         <Route exact path='/buyer'>
           <BuyerNav />
         </Route>
-        <Route exact path='/enterbuy'>
-          <h1>Enter Buy ID</h1>
+        <Route exact path='/enterbuyid'>
+          <BuyerEntry entryPoint="buyId" />
         </Route>
-        <Route exact path='/checkorders'>
-          <h1>Enter Mobile Number</h1>
+        <Route exact path='/entermobilenum'>
+          <BuyerEntry entryPoint="mobileNum" />
         </Route>
         <Route exact path='/orders'>
           <h1>All Buy Orders</h1>

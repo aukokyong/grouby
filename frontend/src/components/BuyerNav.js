@@ -99,7 +99,7 @@ const BuyerNav = () => {
                 justify="center"
                 alignItems="center"
             >
-                <Link to="/enterbuy">
+                <Link to="/enterbuyid">
                     <Grid item className={classes.paper}>
                         <ButtonBase
                             focusRipple
@@ -131,7 +131,7 @@ const BuyerNav = () => {
                         </ButtonBase>
                     </Grid>
                 </Link>
-                <Link to="/checkorders">
+                <Link to="/entermobilenum">
                     <Grid item className={classes.paper}>
                         <ButtonBase
                             focusRipple
