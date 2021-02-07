@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, useParams } from 'react-router-dom'
 
 import Landing from './components/Landing'
 import Login from './components/Login'
+import BuyerNav from './components/BuyerNav'
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
           <Login />
         </Route>
         <Route exact path='/buyer'>
-          <h1>Buyer Nav</h1>
+          <BuyerNav />
         </Route>
         <Route exact path='/enterbuy'>
           <h1>Enter Buy ID</h1>
