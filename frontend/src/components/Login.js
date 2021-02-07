@@ -1,48 +1,100 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-class Login extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+    },
+}));
+
+function Login() {
+    const classes = useStyles();
+    const [formData, setFormData] = useState(
+        {
             username: "",
-            email: "",
             password: "",
         }
+    )
+
+    const handleChange = (e, key) => {
+        setFormData({ ...formData, [key]: e.target.value })
     }
 
-    handleChange = (e, key) => {
-        this.setState({ ...this.state, [key]: e.target.value })
-    }
-
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:8000/users/', this.state)
-            .then(response => {
-                this.setState({username: "", email: "", password: ""})
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        console.log("submitting..", formData)
+        // to replace with axios call when ready
     }
 
-    render() {
-        return (
-            <>
-                <form onSubmit={(e) => this.handleSubmit(e)}>
-                    <label htmlFor="username">Username: </label>
-                    <input type="text" name="username" value={this.state.username} onChange={(e) => this.handleChange(e, "username")} />
-                    <label htmlFor="email">Email: </label>
-                    <input type="email" name="email" value={this.state.email} onChange={(e) => this.handleChange(e, "email")} />
-                    <label htmlFor="password">Password: </label>
-                    <input type="password" name="password" value={this.state.password} onChange={(e) => this.handleChange(e, "password")} />
-                    <br />
-                    <input type="submit" value="Submit" />
+    return (
+        <Container component="main" maxWidth="xs" >
+            <CssBaseline />
+            <div className={classes.paper}>
+                <Typography component="h1" variant="h5">
+                    Sign in
+                </Typography>
+                <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="username"
+                        label="Username"
+                        name="username"
+                        value={formData.username}
+                        onChange={(e) => handleChange(e, 'username')}
+                        autoFocus
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        value={formData.password}
+                        onChange={(e) => handleChange(e, 'password')}
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Sign In
+                    </Button>
                 </form>
-            </>
-        )
-    }
+            </div>
+        </Container>
+    );
 }
 
-export default Login;
+export default Login
