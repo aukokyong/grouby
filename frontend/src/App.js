@@ -4,6 +4,8 @@ import Landing from './components/Landing'
 import Login from './components/Login'
 import BuyerNav from './components/BuyerNav'
 import BuyerEntry from './components/BuyerEntry'
+import BuyForm from './components/BuyForm'
+import ItemsForm from './components/ItemsForm'
 
 function App() {
   return (
@@ -32,7 +34,10 @@ function App() {
           <h1>View 1 Buy</h1>
         </Route>
         <Route exact path='/createbuy'>
-          <h1>Create Buy</h1>
+          <BuyForm />
+        </Route>
+        <Route exact path='/additems'>
+          <ItemsForm />
         </Route>
         <Route exact path='/hostedbuys'>
           <h1>All Hosted Buys</h1>
