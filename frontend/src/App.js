@@ -1,5 +1,6 @@
 import { Route, BrowserRouter as Router, useParams } from 'react-router-dom'
 
+import Landing from './components/Landing'
 import Login from './components/Login'
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
 
       <Router>
         <Route exact path='/'>
-          <h1>Landing Page</h1>
+          <Landing />
         </Route>
         <Route exact path='/login'>
           <Login />
