@@ -16,7 +16,7 @@ class BuySerializer(serializers.HyperlinkedModelSerializer):
     host = serializers.ReadOnlyField(source='host.username')
     # items = serializers.HyperlinkedRelatedField(
     #     many=True, read_only=True, view_name='item-detail')
-    items = ItemSerializer(many=True)
+    items = ItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = Buy
