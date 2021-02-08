@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
+import axios from 'axios';
 import { Button, CssBaseline, TextField, Typography, makeStyles, Container } from '@material-ui/core';
 // import { format, startOfToday } from 'date-fns'
 
@@ -33,8 +34,8 @@ const BuyForm = () => {
         {
             title: "",
             description: "",
-            closingDate: "",
-            collectionDate: "",
+            closing_date: "",
+            collection_date: "",
         }
     )
 
@@ -48,8 +49,20 @@ const BuyForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("submitting..", formData)
-        setIsSubmitted(true)
         // to replace with axios call when ready 
+        axios
+            .post('http://localhost:8000/buys/', formData, {
+                headers: {
+                    Authorization: `Token ${sessionStorage.getItem('token')}`
+                }
+            })
+            .then(response => {
+                console.log(response)
+                setIsSubmitted(true)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     if (isSubmitted) {
@@ -92,24 +105,24 @@ const BuyForm = () => {
                         id="date"
                         label="Closing Date"
                         type="date"
-                        value={formData.closingDate}
+                        value={formData.closing_date}
                         className={classes.dateField}
                         InputLabelProps={{
                             shrink: true,
                         }}
-                        onChange={(e) => handleChange(e, 'closingDate')}
+                        onChange={(e) => handleChange(e, 'closing_date')}
                     />
                     <TextField
                         required
                         id="date"
                         label="Collection Date"
                         type="date"
-                        value={formData.collectionDate}
+                        value={formData.collection_date}
                         className={classes.dateField}
                         InputLabelProps={{
                             shrink: true,
                         }}
-                        onChange={(e) => handleChange(e, 'collectionDate')}
+                        onChange={(e) => handleChange(e, 'collection_date')}
                     />
                     <Button
                         type="submit"
