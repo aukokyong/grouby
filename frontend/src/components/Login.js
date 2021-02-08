@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom'
+// import Cookies from 'js-cookie'
+
 import { Button, CssBaseline, TextField, Typography, makeStyles, Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +35,8 @@ const Login = () => {
         }
     )
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
     const handleChange = (e, key) => {
         setFormData({ ...formData, [key]: e.target.value })
     }
@@ -38,7 +44,22 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("submitting..", formData)
+        // const csrftoken = Cookies.get('csrftoken')
+        axios
+            .post('http://localhost:8000/auth/login', formData)
+            .then(response => {
+                console.log(response)
+                sessionStorage.setItem('token', response.data.key)
+                setIsLoggedIn(true)
+            })
+            .catch(error => {
+                console.log(error)
+            })
         // to replace with axios call when ready
+    }
+
+    if (isLoggedIn) {
+        return <Redirect to="/createbuy" />
     }
 
     return (
