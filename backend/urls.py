@@ -12,5 +12,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('auth/', include('backend.users.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('buys/', include('backend.buys.urls'))
+    path('data/', include('backend.buys.urls'))
 ]
