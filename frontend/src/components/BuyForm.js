@@ -51,13 +51,14 @@ const BuyForm = () => {
         console.log("submitting..", formData)
         // to replace with axios call when ready 
         axios
-            .post('http://localhost:8000/buys/', formData, {
+            .post('http://localhost:8000/data/buys', formData, {
                 headers: {
                     Authorization: `Token ${sessionStorage.getItem('token')}`
                 }
             })
             .then(response => {
                 console.log(response)
+                sessionStorage.setItem('buyId', response.data.id)
                 setIsSubmitted(true)
             })
             .catch(error => {
