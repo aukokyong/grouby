@@ -4,7 +4,7 @@ from backend.buys.models import Buy, Item
 
 
 class ItemSerializer(serializers.HyperlinkedModelSerializer):
-    buy = serializers.ReadOnlyField(source='buy.id')
+    # buy = serializers.ForeignKeyField(source='buy.id')
 
     class Meta:
         model = Item

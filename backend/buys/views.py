@@ -30,8 +30,8 @@ class ItemList(generics.ListCreateAPIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def perform_create(self, serializer):
-        serializer.save(host=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save()
 
 
 class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
