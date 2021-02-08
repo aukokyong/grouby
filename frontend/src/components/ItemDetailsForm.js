@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { makeStyles, CssBaseline, Typography, TextField, Modal, Button } from '@material-ui/core';
 
@@ -35,7 +35,29 @@ const ItemDetailsForm = (props) => {
         buy: `http://localhost:8000/data/buys/${buyId}`,
     })
 
+    useEffect(() => {
+        if (props.editItemId) {
+            axios.get(`http://localhost:8000/data/items/${props.editItemId}`)
+                .then(response => {
+                    setFormData({
+                        ...formData,
+                        title: response.data.title,
+                        description: response.data.description,
+                        sku: response.data.sku,
+                        price: response.data.price,
+                    })
+                })
+        }
+    }, [props.editItemId, open])
+
     const handleClose = () => {
+        setFormData({
+            title: "",
+            description: "",
+            sku: "",
+            price: "",
+            buy: `http://localhost:8000/data/buys/${buyId}`,
+        })
         if (props.editClicked) {
             props.setEditClicked(false)
         }
@@ -46,16 +68,35 @@ const ItemDetailsForm = (props) => {
         setFormData({ ...formData, [key]: e.target.value })
         console.log(formData)
     }
-
+    // need if-else for edit vs add
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (props.editClicked) {
+            props.setEditClicked(false)
+        }
+        props.setAddClicked(false)
+        if (props.editItemId) {
+            return axios
+                .put(`http://localhost:8000/data/items/${props.editItemId}`, formData, {
+                    headers: {
+                        Authorization: `Token ${sessionStorage.getItem('token')}`
+                    }
+                })
+                .then(response => {
+                    console.log(response)
+                    props.setEditedItem(response.data.id)
+                })
+        }
         axios
             .post('http://localhost:8000/data/items', formData, {
                 headers: {
-                    Authorization: `Token d24f301e0088dc621807c6bf3996b6e3c1d03c64`
+                    Authorization: `Token ${sessionStorage.getItem('token')}`
                 }
             })
-            .then(response => console.log(response))
+            .then(response => {
+                console.log(response)
+                props.setNewItem(response.data.id)
+            })
             .catch(error => console.log(error))
     }
 
@@ -64,8 +105,8 @@ const ItemDetailsForm = (props) => {
             <CssBaseline />
             <Button className={classes.close_button} onClick={() => handleClose()}>Close</Button>
             <Typography component="h1" variant="h5">
-                Create A Buy
-                </Typography>
+                {props.editClicked ? "Edit Item" : "Add Item"}
+            </Typography>
             <form className={classes.form} noValidate onSubmit={(e) => handleSubmit(e)}>
                 <TextField
                     variant="outlined"
@@ -122,8 +163,8 @@ const ItemDetailsForm = (props) => {
                     color="primary"
                     className={classes.submit}
                 >
-                    Add Items
-                    </Button>
+                    {props.editClicked ? "Save Changes" : "Add Item"}
+                </Button>
             </form>
         </div>
     );
@@ -132,7 +173,6 @@ const ItemDetailsForm = (props) => {
         <div>
             <Modal
                 open={open}
-                onClose={() => props.setAddClicked(false)}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
             >

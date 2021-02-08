@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Redirect } from 'react-router-dom'
-// import axios from 'axios';
+import axios from 'axios';
 import { makeStyles, IconButton, Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -23,17 +23,29 @@ const useStyles = makeStyles({
     },
 });
 
-const rows = [
-    { title: "Jap Egg", description: "imported", sku: "tray", price: "9" },
-    { title: "kampung egg", description: "free range", sku: "tray", price: "7" },
-];
-
 const BuyItems = () => {
     const classes = useStyles();
 
     const [editClicked, setEditClicked] = useState(false)
+    const [editItemId, setEditItemId] = useState()
     const [addClicked, setAddClicked] = useState(false)
     const [doneClicked, setDoneClicked] = useState(false)
+    const [newItem, setNewItem] = useState()
+    const [editedItem, setEditedItem] = useState()
+    const [rows, setRows] = useState([])
+
+    const buyId = sessionStorage.getItem('buyId')
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:8000/data/buys/${buyId}`)
+            .then(response => {
+                setRows(response.data.items)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [newItem, editedItem])
 
     if (doneClicked) {
         sessionStorage.removeItem('buyId')
@@ -55,7 +67,7 @@ const BuyItems = () => {
                     </TableHead>
                     <TableBody>
                         {rows.map((row) => (
-                            <TableRow key={row.title}>
+                            <TableRow key={row.id}>
                                 <TableCell component="th" scope="row">
                                     {row.title}
                                 </TableCell>
@@ -63,7 +75,10 @@ const BuyItems = () => {
                                 <TableCell align="center">{row.sku}</TableCell>
                                 <TableCell align="center">{row.price}</TableCell>
                                 <TableCell align="center">
-                                    <IconButton variant="contained" color="primary" onClick={() => setEditClicked(true)}>
+                                    <IconButton variant="contained" color="primary" onClick={() => {
+                                        setEditClicked(true)
+                                        setEditItemId(row.id)
+                                    }}>
                                         <EditIcon />
                                     </IconButton>
                                     <IconButton variant="contained" color="secondary">
@@ -89,7 +104,7 @@ const BuyItems = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <ItemDetailsForm editClicked={editClicked} setEditClicked={setEditClicked} addClicked={addClicked} setAddClicked={setAddClicked} />
+            <ItemDetailsForm editClicked={editClicked} setEditClicked={setEditClicked} editItemId={editItemId} addClicked={addClicked} setAddClicked={setAddClicked} setNewItem={setNewItem} setEditedItem={setEditedItem} />
         </>
 
     )

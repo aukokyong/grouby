@@ -49,7 +49,7 @@ const BuyForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("submitting..", formData)
-        // to replace with axios call when ready 
+        // sessionStorage.setItem('buy', formData)
         axios
             .post('http://localhost:8000/data/buys', formData, {
                 headers: {
