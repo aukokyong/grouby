@@ -1,26 +1,33 @@
-import { Route, BrowserRouter as Router, useParams } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
+import axios from 'axios'
+import Landing from './components/Landing'
+import Login from './components/Login'
+import BuyerNav from './components/BuyerNav'
+import BuyerEntry from './components/BuyerEntry'
+import BuyForm from './components/BuyForm'
+import BuyItems from './components/BuyItems'
 
-import SignIn from './components/SignIn'
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 function App() {
   return (
     <>
-
       <Router>
         <Route exact path='/'>
-          <h1>Landing Page</h1>
+          <Landing />
         </Route>
-        <Route exact path='/signin'>
-          <SignIn />
+        <Route exact path='/login'>
+          <Login />
         </Route>
         <Route exact path='/buyer'>
-          <h1>Buyer Nav</h1>
+          <BuyerNav />
         </Route>
-        <Route exact path='/enterbuy'>
-          <h1>Enter Buy ID</h1>
+        <Route exact path='/enterbuyid'>
+          <BuyerEntry entryPoint="buyId" />
         </Route>
-        <Route exact path='/checkorders'>
-          <h1>Enter Mobile Number</h1>
+        <Route exact path='/entermobilenum'>
+          <BuyerEntry entryPoint="mobileNum" />
         </Route>
         <Route exact path='/orders'>
           <h1>All Buy Orders</h1>
@@ -29,7 +36,10 @@ function App() {
           <h1>View 1 Buy</h1>
         </Route>
         <Route exact path='/createbuy'>
-          <h1>Create Buy</h1>
+          <BuyForm />
+        </Route>
+        <Route exact path='/additems'>
+          <BuyItems />
         </Route>
         <Route exact path='/hostedbuys'>
           <h1>All Hosted Buys</h1>
