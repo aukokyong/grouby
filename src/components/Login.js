@@ -46,7 +46,7 @@ const Login = () => {
         console.log("submitting..", formData)
         // const csrftoken = Cookies.get('csrftoken')
         axios
-            .post('http://localhost/auth/login', formData)
+            .post('/auth/login', formData)
             .then(response => {
                 console.log(response)
                 sessionStorage.setItem('token', response.data.key)
