@@ -50,6 +50,7 @@ const ItemDetailsForm = (props) => {
         }
     }, [props.editItemId, open])
 
+    // check why formData shows on add click
     const handleClose = () => {
         setFormData({
             title: "",

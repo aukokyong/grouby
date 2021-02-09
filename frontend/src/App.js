@@ -1,11 +1,14 @@
 import { Route, BrowserRouter as Router } from 'react-router-dom'
-
+import axios from 'axios'
 import Landing from './components/Landing'
 import Login from './components/Login'
 import BuyerNav from './components/BuyerNav'
 import BuyerEntry from './components/BuyerEntry'
 import BuyForm from './components/BuyForm'
 import BuyItems from './components/BuyItems'
+
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 function App() {
   return (
