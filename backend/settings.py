@@ -92,16 +92,15 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+DATABASES = {'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'grouby',
+    'USER': 'admin',
+    'HOST': 'localhost',
+    'PORT': 5432
+}}
+# DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
-# 'default': {
-#     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#     'NAME': 'grouby',
-#     'USER': 'admin',
-#     'HOST': 'localhost',
-#     'PORT': 5432
-# }
 
 # Custom user setting (email as identifier)
 
@@ -136,11 +135,10 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'build/static')
-]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-options = DATABASES['default'].get('OPTIONS', {})
-options.pop('sslmode', None)
+STATICFILES_DIRS = []  # os.path.join(BASE_DIR, 'build/static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'build', 'static')
+
 
 django_heroku.settings(locals())
+options = DATABASES['default'].get('OPTIONS', {})
+options.pop('sslmode', None)
