@@ -1,6 +1,7 @@
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+# from django.db.models import fields
 from rest_framework import serializers
-from backend.buys.models import Buy, Item
+from backend.buys.models import Buy, Item, Order, OrderItem
 
 
 class ItemSerializer(serializers.HyperlinkedModelSerializer):
@@ -22,3 +23,18 @@ class BuySerializer(serializers.HyperlinkedModelSerializer):
         model = Buy
         fields = ['url', 'id', 'host', 'title', 'description',
                   'closing_date', 'collection_date', 'items', 'created', ]
+
+
+class OrderItemSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = ['url', 'id', 'order', 'item', 'quantity', 'created']
+
+
+class OrderSerializer(serializers.HyperlinkedModelSerializer):
+    order_items = OrderItemSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Order
+        fields = ['url', 'id', 'buyer_name', 'buyer_contact',
+                  'order_items', 'paid', 'created']
