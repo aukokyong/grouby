@@ -1,6 +1,7 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework import routers
+from django.views.generic import TemplateView
 from backend.users import views
 
 router = routers.DefaultRouter()
@@ -12,5 +13,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('auth/', include('backend.users.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('data/', include('backend.buys.urls'))
+    path('data/', include('backend.buys.urls')),
+    re_path('.*', TemplateView.as_view(template_name='index.html')
+            ),
 ]
