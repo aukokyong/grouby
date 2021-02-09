@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 
 # Create your models here.
 
@@ -32,6 +33,8 @@ class Item(models.Model):
 class Order(models.Model):
     buyer_name = models.CharField(max_length=100, blank=False)
     buyer_contact = models.IntegerField(blank=False)
+    buy = models.ForeignKey(Buy, related_name="orders",
+                            on_delete=models.CASCADE)
     paid = models.BooleanField()
     created = models.DateTimeField(auto_now_add=True)
 
@@ -42,7 +45,8 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(
         Order, related_name='order_items', on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    item = models.ForeignKey(
+        Item, related_name='orders', on_delete=models.CASCADE)
     quantity = models.IntegerField()
     created = models.DateTimeField(auto_now_add=True)
 
