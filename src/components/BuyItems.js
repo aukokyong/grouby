@@ -38,7 +38,7 @@ const BuyItems = () => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8000/data/buys/${buyId}`)
+            .get(`/data/buys/${buyId}`)
             .then(response => {
                 setRows(response.data.items)
             })

@@ -18,9 +18,9 @@ class SignUp extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:8000/hosts/', this.state)
+        axios.post('/hosts/', this.state)
             .then(response => {
-                this.setState({name: "", email: "", mobile_num: ""})
+                this.setState({ name: "", email: "", mobile_num: "" })
                 console.log(response)
             })
             .catch(error => {

@@ -51,7 +51,7 @@ const BuyForm = () => {
         console.log("submitting..", formData)
         // sessionStorage.setItem('buy', formData)
         axios
-            .post('http://localhost:8000/data/buys', formData, {
+            .post('/data/buys', formData, {
                 headers: {
                     Authorization: `Token ${sessionStorage.getItem('token')}`
                 }

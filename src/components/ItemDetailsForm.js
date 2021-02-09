@@ -32,12 +32,12 @@ const ItemDetailsForm = (props) => {
         description: "",
         sku: "",
         price: "",
-        buy: `http://localhost:8000/data/buys/${buyId}`,
+        buy: `/data/buys/${buyId}`,
     })
 
     useEffect(() => {
         if (props.editItemId) {
-            axios.get(`http://localhost:8000/data/items/${props.editItemId}`)
+            axios.get(`/data/items/${props.editItemId}`)
                 .then(response => {
                     setFormData({
                         ...formData,
@@ -57,7 +57,7 @@ const ItemDetailsForm = (props) => {
             description: "",
             sku: "",
             price: "",
-            buy: `http://localhost:8000/data/buys/${buyId}`,
+            buy: `/data/buys/${buyId}`,
         })
         if (props.editClicked) {
             props.setEditClicked(false)
@@ -78,7 +78,7 @@ const ItemDetailsForm = (props) => {
         props.setAddClicked(false)
         if (props.editItemId) {
             return axios
-                .put(`http://localhost:8000/data/items/${props.editItemId}`, formData, {
+                .put(`/data/items/${props.editItemId}`, formData, {
                     headers: {
                         Authorization: `Token ${sessionStorage.getItem('token')}`
                     }
@@ -89,7 +89,7 @@ const ItemDetailsForm = (props) => {
                 })
         }
         axios
-            .post('http://localhost:8000/data/items', formData, {
+            .post('/data/items', formData, {
                 headers: {
                     Authorization: `Token ${sessionStorage.getItem('token')}`
                 }
