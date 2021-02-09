@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
+from rest_framework import viewsets, View
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_auth.views import (LoginView, LogoutView, PasswordChangeView)
@@ -9,7 +9,7 @@ import os
 from backend.users.serializers import UserSerializer, GroupSerializer
 
 
-class Assets(viewsets.View):
+class Assets(View):
     def get(self, _request, filename):
         path = os.path.join(os.path.dirname(__file__), 'static', filename)
         if os.path.isfile(path):
