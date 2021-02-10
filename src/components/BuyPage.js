@@ -48,9 +48,11 @@ const useStyles = makeStyles((theme) => ({
 const BuyPage = () => {
     const classes = useStyles()
     const [buyData, setBuyData] = useState({ items: [] })
-    const [itemTitle, setItemTitle] = useState("")
+    const [itemTitle, setItemTitle] = useState('')
     const [itemIndex, setItemIndex] = useState('')
     const [quantity, setQuantity] = useState('')
+    const [itemSubTotal, setItemSubTotal] = useState('')
+    const [orderTotal, setOrderTotal] = useState(0)
     const [orderItems, setOrderItems] = useState([])
     const [doneClicked, setDoneClicked] = useState(false)
     const buyId = useParams().id
@@ -66,16 +68,19 @@ const BuyPage = () => {
         }
     }, [])
 
+    const items = buyData.items
+
     const handleItemChange = (e) => {
         setItemTitle(e.target.value)
         const index = buyData.items.findIndex(item => item.title === e.target.value)
-        // console.log(index)
         setItemIndex(index)
     }
     const handleQuantityChange = (e) => {
         setQuantity(e.target.value)
+        setItemSubTotal(e.target.value * items[itemIndex].price)
     }
 
+    // to fix
     const handleDelete = (item) => {
         console.log('delete clicked')
         const tmpOrderItems = orderItems
@@ -89,19 +94,21 @@ const BuyPage = () => {
         setOrderItems(tmpOrderItems)
     }
 
-    const handleSubmit = (e) => {
+    const handleAddItem = (e) => {
         e.preventDefault()
-        setOrderItems([...orderItems, { itemTitle, itemIndex, quantity }])
+        setOrderItems([...orderItems, { itemTitle, 'itemId': items[itemIndex].id, quantity, 'itemSubTotal': items[itemIndex].price * quantity }])
         setItemTitle('')
         setQuantity(1)
     }
 
     const handleDoneClick = () => {
         setDoneClicked(true)
-        sessionStorage.setItem('items', orderItems)
+        const subTotalArray = []
+        orderItems.map(item => subTotalArray.push(item.itemSubTotal))
+        console.log(subTotalArray)
+        setOrderTotal(subTotalArray.reduce((a, b) => (a + b), 0))
     }
 
-    const items = buyData.items
     const menuItems = items.map((item, index) => (
         <MenuItem value={item.title} name={index}>{item.title} ({item.sku})</MenuItem>
     ))
@@ -111,20 +118,19 @@ const BuyPage = () => {
         <MenuItem value={number}>{number}</MenuItem>
     ))
 
-    // const orderItemPrice = (
-    // item.quantity * items[items.indexOf(item.itemId)].price
-    // )
     const buyerSelections = (
         <Table size="small">
             {orderItems.map((item) => (
-                <TableRow className={classes.cartItems}>
-                    <TableCell><Typography variant="overline">{item.itemTitle} x {item.quantity}</Typography></TableCell>
-                    <TableCell>
-                        {doneClicked ? "" : <IconButton color="secondary" align="right" onClick={() => handleDelete(item.itemId)}>
-                            <HighlightOffIcon />
-                        </IconButton>}
-                    </TableCell>
-                </TableRow>
+                <>
+                    <TableRow className={classes.cartItems}>
+                        <TableCell><Typography variant="overline">{item.itemTitle} x {item.quantity}</Typography></TableCell>
+                        <TableCell>
+                            {doneClicked ? `$${item.itemSubTotal}` : <IconButton color="secondary" align="right" onClick={() => handleDelete(item.itemId)}>
+                                <HighlightOffIcon />
+                            </IconButton>}
+                        </TableCell>
+                    </TableRow>
+                </>
             ))}
         </Table>
     )
@@ -138,9 +144,18 @@ const BuyPage = () => {
                 <Paper className={classes.cart}>
                     <Typography variant="h5">{doneClicked ? "Order Summary" : "Your Cart"}</Typography>
                     {orderItems.length !== 0 ? buyerSelections : <Typography variant="overline">... is empty</Typography>}
+                    {doneClicked ? <TableRow className={classes.cartItems}>
+                        <TableCell>
+                            <Typography variant="overline">Order Total</Typography></TableCell>
+                        <TableCell>
+                            ${orderTotal}
+                        </TableCell>
+                    </TableRow>
+                        :
+                        ""}
                 </Paper>
                 {doneClicked ? "" :
-                    <form className={classes.form} noValidate onSubmit={(e) => handleSubmit(e)}>
+                    <form className={classes.form} noValidate onSubmit={(e) => handleAddItem(e)}>
                         <FormControl className={classes.formControl}>
                             <InputLabel shrink id="select-item-label">Item</InputLabel>
                             <Select
@@ -173,13 +188,13 @@ const BuyPage = () => {
                     </form>}
 
 
-                {doneClicked ? <OrderSubmission /> : <Button
+                {doneClicked ? <OrderSubmission orderItems={orderItems} /> : <Button
                     className={classes.done}
                     variant="contained"
                     color="primary"
                     onClick={() => handleDoneClick()}
                 >
-                    Done!
+                    Next
                     </Button>}
             </div>
 

@@ -36,7 +36,7 @@ function App() {
         <Route exact path='/entermobilenum'>
           <BuyerEntry entryPoint="mobileNum" />
         </Route>
-        <Route exact path='/orders'>
+        <Route exact path='/orders/:contact'>
           <h1>All Buy Orders</h1>
         </Route>
         <Route exact path='/buys/:id'>
