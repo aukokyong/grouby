@@ -56,11 +56,9 @@ class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
 class OrderList(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class OrderDetail(generics.ListCreateAPIView):
+class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     authentication_classes = [authentication.TokenAuthentication]
@@ -70,11 +68,9 @@ class OrderDetail(generics.ListCreateAPIView):
 class OrderItemList(generics.ListCreateAPIView):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class OrderItemDetail(generics.ListCreateAPIView):
+class OrderItemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
     authentication_classes = [authentication.TokenAuthentication]

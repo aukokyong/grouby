@@ -4,7 +4,7 @@ from rest_framework import serializers
 from backend.buys.models import Buy, Item, Order, OrderItem
 
 
-class OrderItemSerializer(serializers.HyperlinkedModelSerializer):
+class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = ['url', 'id', 'order', 'item', 'quantity', 'created']
@@ -25,7 +25,7 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Order
         fields = ['url', 'id', 'buyer_name', 'buyer_contact',
-                  'order_items', 'paid', 'created']
+                  'buy', 'order_items', 'paid', 'created']
 
 
 class BuySerializer(serializers.HyperlinkedModelSerializer):
