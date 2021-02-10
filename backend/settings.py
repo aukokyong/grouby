@@ -23,19 +23,6 @@ ALLOWED_HOSTS = ['*']
 CORS_ALLOW_ALL_ORIGINS = True
 # CORS_ALLOWED_ORIGINS = ['*']
 
-# # from google, doesn't work
-# CSRF_COOKIE_SAMESITE = 'Lax'
-# SESSION_COOKIE_SAMESITE = 'Lax'
-# CSRF_COOKIE_HTTPONLY = True
-# SESSION_COOKIE_HTTPONLY = True
-
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:3000',
-#     'http://127.0.0.1:3000',
-# ]
-# CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
-# CORS_ALLOW_CREDENTIALS = True
-
 
 # Application definition
 
@@ -90,19 +77,8 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'grouby',
-    'USER': 'admin',
-    'HOST': 'localhost',
-    'PORT': 5432
-}}
-# DATABASES['default'] = dj_database_url.config(conn_max_age=600)
-
-
-# Custom user setting (email as identifier)
-
-# AUTH_USER_MODEL = 'app.HostUser'
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -137,6 +113,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'build', 'static')
 # os.path.join(BASE_DIR, 'build/static')
 STATICFILES_DIRS = []
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+ROOT_URLCONF = 'backend.urls'
 
 options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
