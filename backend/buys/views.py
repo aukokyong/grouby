@@ -43,7 +43,7 @@ class ItemList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     # def perform_create(self, serializer):
-    #     serializer.save()
+    #     serializer.save(host=self.request.user)
 
 
 class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -79,3 +79,11 @@ class OrderItemDetail(generics.ListCreateAPIView):
     serializer_class = OrderItemSerializer
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+
+class HostedBuys(generics.ListAPIView):
+    serializer_class = BuySerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Buy.objects.filter(host=user)
