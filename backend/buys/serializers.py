@@ -19,7 +19,7 @@ class ItemSerializer(serializers.HyperlinkedModelSerializer):
                   'description', 'sku', 'price', 'created', ]
 
 
-class OrderSerializer(serializers.HyperlinkedModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True, read_only=True)
 
     class Meta:
