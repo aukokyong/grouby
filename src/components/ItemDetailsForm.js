@@ -36,7 +36,7 @@ const ItemDetailsForm = (props) => {
     })
 
     useEffect(() => {
-        if (props.editItemId) {
+        if (props.editItemId && open) {
             axios.get(`/data/items/${props.editItemId}`)
                 .then(response => {
                     setFormData({
@@ -48,10 +48,11 @@ const ItemDetailsForm = (props) => {
                     })
                 })
         }
-    }, [props.editItemId, open])
+    }, [open])
 
     // check why formData shows on add click
     const handleClose = () => {
+        props.setEditItemId()
         setFormData({
             title: "",
             description: "",
@@ -67,15 +68,21 @@ const ItemDetailsForm = (props) => {
 
     const handleChange = (e, key) => {
         setFormData({ ...formData, [key]: e.target.value })
-        console.log(formData)
+        // console.log(formData)
     }
     // need if-else for edit vs add
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (props.editClicked) {
-            props.setEditClicked(false)
-        }
+        props.setEditClicked(false)
+        props.setEditItemId()
         props.setAddClicked(false)
+        setFormData({
+            title: "",
+            description: "",
+            sku: "",
+            price: "",
+            buy: `/data/buys/${buyId}`,
+        })
         if (props.editItemId) {
             return axios
                 .put(`/data/items/${props.editItemId}`, formData, {
@@ -104,7 +111,7 @@ const ItemDetailsForm = (props) => {
     const body = (
         <div style={modalStyle} className={classes.paper}>
             <CssBaseline />
-            <Button className={classes.close_button} onClick={() => handleClose()}>Close</Button>
+            <Button className={classes.close_button} onClick={handleClose}>Close</Button>
             <Typography component="h1" variant="h5">
                 {props.editClicked ? "Edit Item" : "Add Item"}
             </Typography>
@@ -174,6 +181,7 @@ const ItemDetailsForm = (props) => {
         <div>
             <Modal
                 open={open}
+                onClose={handleClose}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
             >

@@ -17,8 +17,8 @@ import ItemDetailsForm from './ItemDetailsForm';
 
 const useStyles = makeStyles({
     table: {
-        minWidth: 300,
-        maxWidth: 500,
+        minWidth: 500,
+        maxWidth: 700,
         alignItems: 'center',
     },
 });
@@ -42,6 +42,12 @@ const BuyItems = () => {
             .then(response => {
                 setRows(response.data.items)
             })
+            .then(() => {
+                rows.map((row) => (
+                    console.log(row.description)
+
+                ))
+            })
             .catch(error => {
                 console.log(error)
             })
@@ -52,6 +58,28 @@ const BuyItems = () => {
         return <Redirect to="/hostedbuys" />
     }
 
+    const populatedRows = (rows.map((row) => (
+        <TableRow key={row.id}>
+            <TableCell component="th" scope="row">
+                {row.title}
+            </TableCell>
+            <TableCell align="center">{row.description}</TableCell>
+            <TableCell align="center">{row.sku}</TableCell>
+            <TableCell align="center">{row.price}</TableCell>
+            <TableCell align="center">
+                <IconButton variant="contained" color="primary" onClick={() => {
+                    setEditClicked(true)
+                    setEditItemId(row.id)
+                }}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton variant="contained" color="secondary">
+                    <DeleteIcon />
+                </IconButton>
+            </TableCell>
+        </TableRow>
+    ))
+    )
     return (
         <>
             <TableContainer component={Paper}>
@@ -66,27 +94,7 @@ const BuyItems = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">
-                                    {row.title}
-                                </TableCell>
-                                <TableCell align="center">{row.description}</TableCell>
-                                <TableCell align="center">{row.sku}</TableCell>
-                                <TableCell align="center">{row.price}</TableCell>
-                                <TableCell align="center">
-                                    <IconButton variant="contained" color="primary" onClick={() => {
-                                        setEditClicked(true)
-                                        setEditItemId(row.id)
-                                    }}>
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton variant="contained" color="secondary">
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                        {rows ? populatedRows : "Start by adding items!"}
                         <TableRow key='add'>
                             <TableCell component="th" scope="row" />
                             <TableCell align="right"></TableCell>
@@ -104,7 +112,7 @@ const BuyItems = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <ItemDetailsForm editClicked={editClicked} setEditClicked={setEditClicked} editItemId={editItemId} addClicked={addClicked} setAddClicked={setAddClicked} setNewItem={setNewItem} setEditedItem={setEditedItem} />
+            <ItemDetailsForm editClicked={editClicked} setEditClicked={setEditClicked} editItemId={editItemId} setEditItemId={setEditItemId} addClicked={addClicked} setAddClicked={setAddClicked} setNewItem={setNewItem} setEditedItem={setEditedItem} />
         </>
 
     )
