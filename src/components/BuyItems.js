@@ -75,6 +75,7 @@ const BuyItems = () => {
     ))
     )
 
+
     return (
         <>
             <TableContainer component={Paper}>
@@ -89,7 +90,7 @@ const BuyItems = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows ? populatedRows : <TableRow>Start by adding items!</TableRow>}
+                        {populatedRows}
                         <TableRow key='add'>
                             <TableCell component="th" scope="row" />
                             <TableCell align="right"></TableCell>

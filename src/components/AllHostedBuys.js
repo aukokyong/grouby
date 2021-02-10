@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
-import { makeStyles, IconButton, Button } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { makeStyles, IconButton } from '@material-ui/core';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -23,6 +22,7 @@ const useStyles = makeStyles({
 const AllHostedBuys = () => {
     const classes = useStyles()
     const [rows, setRows] = useState([])
+    const [viewMoreClicked, setViewMoreClicked] = useState()
 
     useEffect(() => {
         axios.get('/data/hostedbuys', {
@@ -36,10 +36,8 @@ const AllHostedBuys = () => {
             })
     }, [])
 
-    const handleViewMore = (buyId) => {
-        const url = `/hostedbuys/${buyId}`
-        console.log(url)
-        return <Redirect to={url} />
+    if (viewMoreClicked) {
+        return <Redirect to={`/hostedbuys/${viewMoreClicked}`} />
     }
 
     const populatedRows = (rows.map((row) => (
@@ -54,7 +52,7 @@ const AllHostedBuys = () => {
             <TableCell align="center">{row.closing_date}</TableCell>
             <TableCell align="center">{row.collection_date}</TableCell>
             <TableCell align="center">
-                <IconButton variant="contained" color="primary" onClick={() => handleViewMore(row.id)}>
+                <IconButton variant="contained" color="primary" onClick={() => { setViewMoreClicked(row.id) }}>
                     <PageviewIcon />
                 </IconButton>
             </TableCell>
@@ -62,6 +60,15 @@ const AllHostedBuys = () => {
     ))
     )
 
+    // const noItems = (
+    //     <TableRow key='no items'>
+    //         <TableCell align="center">
+    //         </TableCell>
+    //         <TableCell align="center">
+    //             No Items
+    //         </TableCell>
+    //     </TableRow>
+    // )
     return (
         <>
             <h1>All Hosted Buys</h1>
@@ -78,7 +85,7 @@ const AllHostedBuys = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows ? populatedRows : <TableRow>Start by adding items!</TableRow>}
+                        {rows ? populatedRows : ''}
                     </TableBody>
                 </Table>
             </TableContainer>

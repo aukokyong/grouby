@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
-import { makeStyles, IconButton, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -44,7 +44,6 @@ const OneHostedBuy = () => {
             <TableCell align="center">{row.description}</TableCell>
             <TableCell align="center">{row.sku}</TableCell>
             <TableCell align="center">{row.price}</TableCell>
-
         </TableRow>
     ))
     )

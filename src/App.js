@@ -9,6 +9,7 @@ import BuyForm from './components/BuyForm'
 import BuyItems from './components/BuyItems'
 import AllHostedBuys from './components/AllHostedBuys'
 import OneHostedBuy from './components/OneHostedBuy'
+import BuyPage from './components/BuyPage'
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -39,7 +40,10 @@ function App() {
           <h1>All Buy Orders</h1>
         </Route>
         <Route exact path='/buys/:id'>
-          <h1>View 1 Buy</h1>
+          <BuyPage />
+        </Route>
+        <Route exact path='/submitbuy'>
+          <h1>Buy Submission</h1>
         </Route>
         <Route exact path='/createbuy'>
           <BuyForm />
