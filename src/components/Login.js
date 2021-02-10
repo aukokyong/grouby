@@ -58,7 +58,7 @@ const Login = () => {
     }
 
     if (isLoggedIn) {
-        return <Redirect to="/createbuy" />
+        return <Redirect to="/host" />
     }
 
     return (

@@ -99,7 +99,7 @@ const Landing = () => {
                 justify="center"
                 alignItems="center"
             >
-                <Link to="/login">
+                <Link to="/host">
                     <Grid item className={classes.paper}>
                         <ButtonBase
                             focusRipple
@@ -113,7 +113,7 @@ const Landing = () => {
                             <span
                                 className={classes.imageSrc}
                                 style={{
-                                    backgroundImage: 'https://picsum.photos/200',
+                                    backgroundImage: 'url(https://picsum.photos/200)',
                                 }}
                             />
                             <span className={classes.imageBackdrop} />
@@ -145,7 +145,7 @@ const Landing = () => {
                             <span
                                 className={classes.imageSrc}
                                 style={{
-                                    backgroundImage: 'https://picsum.photos/200',
+                                    backgroundImage: 'url(https://picsum.photos/200)',
                                 }}
                             />
                             <span className={classes.imageBackdrop} />

@@ -113,7 +113,7 @@ const HostNav = () => {
                             <span
                                 className={classes.imageSrc}
                                 style={{
-                                    backgroundImage: 'https://picsum.photos/200',
+                                    backgroundImage: 'url(https://picsum.photos/200)',
                                 }}
                             />
                             <span className={classes.imageBackdrop} />
@@ -145,7 +145,7 @@ const HostNav = () => {
                             <span
                                 className={classes.imageSrc}
                                 style={{
-                                    backgroundImage: 'https://picsum.photos/200',
+                                    backgroundImage: 'url(https://picsum.photos/200)',
                                 }}
                             />
                             <span className={classes.imageBackdrop} />
