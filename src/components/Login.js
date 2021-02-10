@@ -55,7 +55,6 @@ const Login = () => {
             .catch(error => {
                 console.log(error)
             })
-        // to replace with axios call when ready
     }
 
     if (isLoggedIn) {

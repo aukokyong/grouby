@@ -42,12 +42,6 @@ const BuyItems = () => {
             .then(response => {
                 setRows(response.data.items)
             })
-            .then(() => {
-                rows.map((row) => (
-                    console.log(row.description)
-
-                ))
-            })
             .catch(error => {
                 console.log(error)
             })
@@ -80,6 +74,7 @@ const BuyItems = () => {
         </TableRow>
     ))
     )
+
     return (
         <>
             <TableContainer component={Paper}>
@@ -94,7 +89,7 @@ const BuyItems = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows ? populatedRows : "Start by adding items!"}
+                        {rows ? populatedRows : <TableRow>Start by adding items!</TableRow>}
                         <TableRow key='add'>
                             <TableCell component="th" scope="row" />
                             <TableCell align="right"></TableCell>
