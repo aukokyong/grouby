@@ -2,10 +2,13 @@ import { Route, BrowserRouter as Router } from 'react-router-dom'
 import axios from 'axios'
 import Landing from './components/Landing'
 import Login from './components/Login'
+import Logout from './components/Logout'
 import BuyerNav from './components/BuyerNav'
 import BuyerEntry from './components/BuyerEntry'
 import BuyForm from './components/BuyForm'
 import BuyItems from './components/BuyItems'
+import AllHostedBuys from './components/AllHostedBuys'
+import OneHostedBuy from './components/OneHostedBuy'
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -19,6 +22,9 @@ function App() {
         </Route>
         <Route exact path='/login'>
           <Login />
+        </Route>
+        <Route exact path='/logout'>
+          <Logout />
         </Route>
         <Route exact path='/buyer'>
           <BuyerNav />
@@ -42,10 +48,10 @@ function App() {
           <BuyItems />
         </Route>
         <Route exact path='/hostedbuys'>
-          <h1>All Hosted Buys</h1>
+          <AllHostedBuys />
         </Route>
         <Route exact path='/hostedbuys/:id'>
-          <h1>One Hosted Buy</h1>
+          <OneHostedBuy />
         </Route>
       </Router>
     </>
