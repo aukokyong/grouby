@@ -5,6 +5,8 @@ from backend.buys.models import Buy, Item, Order, OrderItem
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    # item = serializers.StringRelatedField()  # gives the item "title" instead of ID
+
     class Meta:
         model = OrderItem
         fields = ['url', 'id', 'order', 'item', 'quantity', 'created']
@@ -20,7 +22,9 @@ class ItemSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    order_items = OrderItemSerializer(many=True, read_only=True)
+    order_items = OrderItemSerializer(
+        many=True, read_only=True)
+    # buy = serializers.ReadOnlyField(source='buy.id', allow_null=True)
 
     class Meta:
         model = Order

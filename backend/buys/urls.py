@@ -23,4 +23,5 @@ urlpatterns = format_suffix_patterns([
     path('ordereditems', views.OrderItemList.as_view(), name='orderitem-list'),
     path('ordereditems/<int:pk>',
          views.OrderItemDetail.as_view(), name='orderitem-detail'),
+    path('test', views.BuyerOrders.as_view())
 ])

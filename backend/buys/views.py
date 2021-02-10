@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.http import HttpResponse, HttpResponseNotFound
+from django.views import generic
 
 
 class Assets(viewsets.ViewSet):
@@ -54,8 +55,26 @@ class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class OrderList(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
+    # queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        queryset = Order.objects.all()
+        contact = self.request.query_params.get('contact', None)
+        if contact is not None:
+            queryset = queryset.filter(
+                buyer_contact=contact)
+        return queryset
+
+
+class BuyerOrders(generics.ListAPIView):
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        contact = self.request.query_params.get('contact', None)
+        queryset = Order.objects.filter(
+            buyer_contact=contact).values('buy__title')
+        return queryset
 
 
 class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -83,3 +102,7 @@ class HostedBuys(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return Buy.objects.filter(host=user)
+
+
+# class BuyerOrders(generics.ListAPIView):
+#     serializer_class = OrderSerializer

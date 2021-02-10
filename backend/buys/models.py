@@ -27,7 +27,7 @@ class Item(models.Model):
         Buy, related_name='items', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.buy}: Item ID {self.id}"
+        return f"{self.title}"
 
 
 class Order(models.Model):

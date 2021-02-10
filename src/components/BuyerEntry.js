@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Button, CssBaseline, TextField, Typography, makeStyles, Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +31,8 @@ const BuyerEntry = (props) => {
         }
     )
 
+    const [redirect, setRedirect] = useState()
+
     const handleChange = (e) => {
         setFormData({ ...formData, [props.entryPoint]: e.target.value })
     }
@@ -37,7 +40,13 @@ const BuyerEntry = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("submitting..", formData)
-        // to replace with axios call when ready
+        if (props.entryPoint === 'buyId') {
+            setRedirect(formData.buyId)
+        }
+    }
+
+    if (redirect) {
+        return <Redirect to={`/buys/${formData.buyId}`} />
     }
 
     return (

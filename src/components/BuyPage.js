@@ -4,10 +4,17 @@ import { useParams } from 'react-router-dom'
 import { Typography, makeStyles, Container, CssBaseline, Button, FormControl, InputLabel, Select, MenuItem, Paper, IconButton, TableRow, TableCell, Table } from '@material-ui/core'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import RefreshIcon from '@material-ui/icons/Refresh';
+
 
 import OrderSubmission from './OrderSubmission'
 
 const useStyles = makeStyles((theme) => ({
+    header: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     paper: {
         marginTop: theme.spacing(8),
         display: 'flex',
@@ -55,6 +62,8 @@ const BuyPage = () => {
     const [orderTotal, setOrderTotal] = useState(0)
     const [orderItems, setOrderItems] = useState([])
     const [doneClicked, setDoneClicked] = useState(false)
+    const [refresh, setRefresh] = useState()
+
     const buyId = useParams().id
 
     useEffect(() => {
@@ -66,7 +75,7 @@ const BuyPage = () => {
                     sessionStorage.setItem('buyId', buyId)
                 })
         }
-    }, [])
+    }, [refresh])
 
     const items = buyData.items
 
@@ -109,6 +118,10 @@ const BuyPage = () => {
         setOrderTotal(subTotalArray.reduce((a, b) => (a + b), 0))
     }
 
+    const handleRefresh = () => {
+        setRefresh(Math.random())
+    }
+
     const menuItems = items.map((item, index) => (
         <MenuItem value={item.title} name={index}>{item.title} ({item.sku})</MenuItem>
     ))
@@ -139,7 +152,12 @@ const BuyPage = () => {
         <Container component="main">
             <CssBaseline />
             <div className={classes.paper}>
-                <Typography variant="h3"> {buyData.title} </Typography>
+                <div className={classes.header}>
+                    <Typography variant="h3"> {buyData.title} </Typography>
+                    <span>
+                        <IconButton onClick={() => handleRefresh()}><RefreshIcon /></IconButton>
+                    </span>
+                </div>
                 <Typography variant="subtitle1"> {buyData.description} </Typography>
                 <Paper className={classes.cart}>
                     <Typography variant="h5">{doneClicked ? "Order Summary" : "Your Cart"}</Typography>

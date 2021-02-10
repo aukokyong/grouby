@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Landing = () => {
+const HostNav = () => {
     const classes = useStyles()
 
     return (
@@ -99,7 +99,7 @@ const Landing = () => {
                 justify="center"
                 alignItems="center"
             >
-                <Link to="/login">
+                <Link to="/createbuy">
                     <Grid item className={classes.paper}>
                         <ButtonBase
                             focusRipple
@@ -124,14 +124,14 @@ const Landing = () => {
                                     color="inherit"
                                     className={classes.imageTitle}
                                 >
-                                    Host
+                                    Create a Buy
                                         <span className={classes.imageMarked} />
                                 </Typography>
                             </span>
                         </ButtonBase>
                     </Grid>
                 </Link>
-                <Link to="/enterbuyid">
+                <Link to="/hostedbuys">
                     <Grid item className={classes.paper}>
                         <ButtonBase
                             focusRipple
@@ -156,7 +156,7 @@ const Landing = () => {
                                     color="inherit"
                                     className={classes.imageTitle}
                                 >
-                                    Buyer
+                                    View Hosted Buys
                                         <span className={classes.imageMarked} />
                                 </Typography>
                             </span>
@@ -168,4 +168,4 @@ const Landing = () => {
     )
 }
 
-export default Landing
+export default HostNav

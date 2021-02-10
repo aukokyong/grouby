@@ -12,10 +12,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
@@ -32,7 +28,7 @@ const OrderSubmission = (props) => {
         {
             buyer_name: "",
             buyer_contact: "",
-            buy: sessionStorage.getItem('buyId'),
+            buy: Number(sessionStorage.getItem('buyId')),
             paid: false,
         }
     )
@@ -60,7 +56,6 @@ const OrderSubmission = (props) => {
                         sessionStorage.removeItem('buyId')
                         setorderSubmitted(true)
                     })
-
                 })
             })
             .catch(error => {
@@ -69,7 +64,8 @@ const OrderSubmission = (props) => {
     }
 
     if (orderSubmitted) {
-        return <Redirect to={`/orders/${formData.buyer_contact}`} />
+        // return <Redirect to={`/orders/${formData.buyer_contact}`} />
+        return <Redirect to='/ordersuccess' />
     }
     return (
         <Container component="main" maxWidth="xs" >
