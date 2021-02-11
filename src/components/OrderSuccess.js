@@ -1,4 +1,5 @@
 import { CssBaseline, Typography, makeStyles, Container } from '@material-ui/core';
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -26,6 +27,11 @@ const OrderSuccess = () => {
                 <Typography component="h1" variant="h5">
                     Thank you for your order! The host will contact you soon.
                 </Typography>
+                <Link to='/enterbuyid'>
+                    <Typography component="h1" variant="overline">
+                        View Another Buy
+                    </Typography>
+                </Link>
             </div>
         </Container>
 

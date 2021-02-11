@@ -99,7 +99,7 @@ const Landing = () => {
                 justify="center"
                 alignItems="center"
             >
-                <Link to="/host">
+                <Link to="/login">
                     <Grid item className={classes.paper}>
                         <ButtonBase
                             focusRipple

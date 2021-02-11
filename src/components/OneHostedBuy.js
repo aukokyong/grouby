@@ -40,11 +40,11 @@ const OneHostedBuy = () => {
     const [buyTitle, setBuyTitle] = useState()
     const [itemRows, setItemRows] = useState([])
     const [orders, setOrders] = useState([])
-    const [paid, setPaid] = useState(false)
     const [refresh, setRefresh] = useState()
     const hostedBuyId = useParams().id
 
     useEffect(() => {
+        // handleRefresh()
         axios
             .get(`/data/buys/${hostedBuyId}`)
             .then(response => {
@@ -69,18 +69,19 @@ const OneHostedBuy = () => {
                 setBuyTitle(response.data.title)
                 setItemRows(response.data.items)
                 setOrders(tmpOrders)
+                // handleRefresh()
             })
     }, [refresh])
 
     const handleChecked = (e, order) => {
         axios
-            .put(`/data/orders/${order.id}`, { buyer_name: order.buyer_name, buyer_contact: order.buyer_contact, buy: order.buy, paid: true }, {
+            .put(`/data/orders/${order.id}`, { buyer_name: order.buyer_name, buyer_contact: order.buyer_contact, buy: order.buy, paid: !order.paid }, {
                 headers: {
                     Authorization: `Token ${sessionStorage.getItem('token')}`
                 }
             })
             .then(response => {
-                setPaid(!paid)
+                handleRefresh()
             })
     }
 
